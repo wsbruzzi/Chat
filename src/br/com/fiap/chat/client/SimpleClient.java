@@ -15,8 +15,14 @@ public class SimpleClient {
 			Conexao conexao = new Conexao("192.168.23.103", "Marcio");
 			conexao.open();
 			while(conexao.isLogado()){
-				conexao.sendMessage(inLine.readLine());
-				//System.out.println(conexao.receive());
+				String mensagem = inLine.readLine();
+				
+				if(":q".equalsIgnoreCase(mensagem)){
+					conexao.close();
+					break;
+				}
+				
+				conexao.sendMessage(mensagem);
 			}
 			
 		} catch (IOException e) {

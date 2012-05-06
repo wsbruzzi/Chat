@@ -44,6 +44,7 @@ public class Conexao {
 	
 	public void close(){
 		try {
+			this.sendCommand("sair:");
 			this.conexao.close();
 		} catch (IOException e) {
 			throw new RuntimeException("Erro ao fechar conexão: " + e.getMessage());
