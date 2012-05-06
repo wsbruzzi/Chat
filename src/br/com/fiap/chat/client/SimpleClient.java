@@ -3,18 +3,30 @@ package br.com.fiap.chat.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+
+import br.com.fiap.chat.suporte.ChatException;
+import br.com.fiap.chat.suporte.Conexao;
 
 public class SimpleClient {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		try {
-			Socket kkSocket = new Socket("localhost", 4444);
-			PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
+			BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
+			
+			Conexao conexao = new Conexao("192.168.23.103", "Marcio");
+			conexao.open();
+			while(conexao.isLogado()){
+				conexao.sendMessage(inLine.readLine());
+				//System.out.println(conexao.receive());
+			}
+			
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ChatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
