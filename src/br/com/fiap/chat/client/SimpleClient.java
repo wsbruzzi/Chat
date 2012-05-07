@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 import br.com.fiap.chat.suporte.ChatException;
 import br.com.fiap.chat.suporte.Conexao;
-
+ 
 public class SimpleClient {
 	public static void main(String[] args) throws InterruptedException {
 		try {
