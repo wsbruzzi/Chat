@@ -28,10 +28,10 @@ public class Conexao {
 				this.writer = new PrintWriter(this.conexao.getOutputStream(), true);
 				this.reader = new BufferedReader(new InputStreamReader(this.conexao.getInputStream()));
 			}catch (Exception e) {
-				throw new ChatException("Erro ao abrir conexão: " + e.getMessage());
+				throw new ChatException("Erro ao abrir conexï¿½o: " + e.getMessage());
 			}
 			
-			this.registraUsuario();
+			this.inscribeUser();
 		}
 	}
 	
@@ -46,11 +46,11 @@ public class Conexao {
 		try {
 			this.conexao.close();
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao fechar conexão: " + e.getMessage());
+			throw new RuntimeException("Erro ao fechar conexï¿½o: " + e.getMessage());
 		}
 	}
 		
-	public boolean isLogado(){
+	public boolean isRegistered(){
 		return !this.conexao.isClosed();
 	}
 	
@@ -72,12 +72,19 @@ public class Conexao {
 		}
 	}
 	
-	private void registraUsuario() throws ChatException{
+	public void getRegisteredUsers(){
+		this.sendCommand("listaUsuarios:");
+		String usuarios = this.receive();
+		
+		return Arrays.asList(usuarios.split("|"));
+	}
+	
+	private void inscribeUser() throws ChatException{
 		this.sendCommand("registraUsuario:" + this.apelido);
 		
 		if(!"true".equalsIgnoreCase(this.receive())){
 			this.close();
-			throw new ChatException("Erro ao registrar usuário");
+			throw new ChatException("Erro ao registrar usuï¿½rio");
 		}
 	}
 	
