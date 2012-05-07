@@ -1,14 +1,14 @@
 package br.com.fiap.chat.server;
 
-import java.net.Socket;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class ClientesConectados {
 
-	private Map<String, Socket> clienteMap = new TreeMap<String, Socket>();
-	
-	public ClientesConectados(String nome, Socket cliente) {
+	private Map<String, ClientInstance> clienteMap = new TreeMap<String, ClientInstance>();
+	private ClientesConectados cc;
+
+	public void adicionaCliente(String nome, ClientInstance cliente) {
 		clienteMap.put(nome, cliente);
 	}
 	
@@ -16,7 +16,11 @@ public class ClientesConectados {
 		clienteMap.remove(nome);
 	}
 	
-	public Map getClientesConectados() {
+	public Map<String, ClientInstance> getClientesConectados() {
 		return clienteMap;
+	}
+
+	public boolean apelidoExists(String apelido) {
+		return clienteMap.containsKey(apelido);
 	}
 }

@@ -12,7 +12,7 @@ public class SimpleClient {
 		try {
 			BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
 			
-			Conexao conexao = new Conexao("192.168.23.103", "Marcio");
+			Conexao conexao = new Conexao("127.0.0.1", "William");
 			conexao.open();
 			while(conexao.isLogado()){
 				conexao.sendMessage(inLine.readLine());
