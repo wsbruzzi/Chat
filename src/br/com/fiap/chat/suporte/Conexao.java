@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Arrays;
 
 
 public class Conexao {
@@ -72,7 +74,7 @@ public class Conexao {
 		}
 	}
 	
-	public void getRegisteredUsers(){
+	public List<String> getRegisteredUsers(){
 		this.sendCommand("listaUsuarios:");
 		String usuarios = this.receive();
 		
