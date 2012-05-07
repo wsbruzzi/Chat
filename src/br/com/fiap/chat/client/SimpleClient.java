@@ -12,6 +12,7 @@ public class SimpleClient {
 		try {
 			BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
 			
+			// testando edição pelo github.
 			Conexao conexao = new Conexao("127.0.0.1", "William");
 			conexao.open();
 			while(conexao.isLogado()){
