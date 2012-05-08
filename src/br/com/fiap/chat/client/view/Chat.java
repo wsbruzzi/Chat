@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
+import javax.swing.border.Border;
 
 public class Chat extends JFrame {
 	
@@ -44,17 +46,25 @@ public class Chat extends JFrame {
 		txtMensagem  = new JTextField(15);
 		btnEnvia     = new JButton("Enviar");
 		
+		Border txpBorder = BorderFactory.createLineBorder(Color.black);
+		txpHistorico.setBorder(txpBorder);
+		
 		//histórico
-		layout.putConstraint(SpringLayout.WEST , txpHistorico,  5, SpringLayout.WEST , pnlChat);
-		layout.putConstraint(SpringLayout.NORTH, txpHistorico,  5, SpringLayout.NORTH, pnlChat);
-		layout.putConstraint(SpringLayout.EAST , txpHistorico, -5, SpringLayout.EAST , pnlChat);
-		layout.putConstraint(SpringLayout.SOUTH, txpHistorico, -5, SpringLayout.SOUTH, txtMensagem);
+		layout.putConstraint(SpringLayout.NORTH, txpHistorico,   5, SpringLayout.NORTH, pnlChat);
+		layout.putConstraint(SpringLayout.SOUTH, txpHistorico, -35, SpringLayout.SOUTH, pnlChat);
+		layout.putConstraint(SpringLayout.EAST , txpHistorico,  -5, SpringLayout.EAST , pnlChat);
+		layout.putConstraint(SpringLayout.WEST , txpHistorico,   5, SpringLayout.WEST , pnlChat);
 		
 		//Field Mensagem
-		layout.putConstraint(SpringLayout.WEST , txtMensagem, 5, SpringLayout.WEST , pnlChat);
-		layout.putConstraint(SpringLayout.NORTH, txtMensagem, 5, SpringLayout.SOUTH, txpHistorico);
+		layout.putConstraint(SpringLayout.NORTH, txtMensagem,  5, SpringLayout.SOUTH, txpHistorico);
+		layout.putConstraint(SpringLayout.SOUTH, txtMensagem, -5, SpringLayout.SOUTH, pnlChat);
+		layout.putConstraint(SpringLayout.EAST , txtMensagem, -5, SpringLayout.WEST , btnEnvia);
+		layout.putConstraint(SpringLayout.WEST , txtMensagem,  5, SpringLayout.WEST , pnlChat);
 		
-		//TODO: Finalizar posicionamento dos elementos
+		//Button Envia
+		layout.putConstraint(SpringLayout.SOUTH, btnEnvia, -5, SpringLayout.SOUTH, pnlChat);
+		layout.putConstraint(SpringLayout.EAST , btnEnvia, -5, SpringLayout.EAST , pnlChat);
+		
 
 		pnlChat.setLayout(layout);
 		

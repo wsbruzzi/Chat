@@ -28,7 +28,7 @@ public class Login extends JFrame {
 		initPnlLogin();
 
 		this.setTitle("Login Chat Fiap");
-		this.setSize(200,120);
+		this.setSize(400,120);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.add(pnlLogin);
@@ -41,32 +41,32 @@ public class Login extends JFrame {
 		pnlLogin.setBackground(Color.WHITE);
 
 		lblUsuario = new JLabel("Apelido");
-		lblIp      = new JLabel("IP"); 
+		lblIp      = new JLabel("IP do servidor"); 
 		txtUsuario = new JTextField(15);
 		txtIp      = new JTextField(15);
 		btnOk      = new JButton("Entrar");
 
 		//Label Usuário
-		layout.putConstraint(SpringLayout.WEST , lblUsuario, 5, SpringLayout.WEST , pnlLogin);
 		layout.putConstraint(SpringLayout.NORTH, lblUsuario, 5, SpringLayout.NORTH, pnlLogin);
+		layout.putConstraint(SpringLayout.WEST , lblUsuario, 5, SpringLayout.WEST , pnlLogin);
 		
 		//Field Usuário 
-		layout.putConstraint(SpringLayout.WEST , txtUsuario,  5, SpringLayout.EAST , lblUsuario);
-		layout.putConstraint(SpringLayout.NORTH, txtUsuario,  5, SpringLayout.NORTH, pnlLogin);
-		layout.putConstraint(SpringLayout.EAST , txtUsuario, -5, SpringLayout.EAST , pnlLogin);
+		layout.putConstraint(SpringLayout.NORTH, txtUsuario,   5, SpringLayout.NORTH, pnlLogin);
+		layout.putConstraint(SpringLayout.EAST , txtUsuario,  -5, SpringLayout.EAST , pnlLogin);
+		layout.putConstraint(SpringLayout.WEST , txtUsuario, 140, SpringLayout.WEST , pnlLogin);
 		
 		//Label Ip
-		layout.putConstraint(SpringLayout.WEST , lblIp, 5, SpringLayout.WEST , pnlLogin);
 		layout.putConstraint(SpringLayout.NORTH, lblIp, 5, SpringLayout.SOUTH, lblUsuario);
+		layout.putConstraint(SpringLayout.WEST , lblIp, 5, SpringLayout.WEST , pnlLogin);
 		
 		//Field Ip
-		layout.putConstraint(SpringLayout.WEST , txtIp,  5, SpringLayout.EAST , lblIp);
-		layout.putConstraint(SpringLayout.NORTH, txtIp,  5, SpringLayout.SOUTH, txtUsuario);
-		layout.putConstraint(SpringLayout.EAST , txtIp, -5, SpringLayout.EAST, pnlLogin);
+		layout.putConstraint(SpringLayout.NORTH, txtIp,   5, SpringLayout.SOUTH, txtUsuario);
+		layout.putConstraint(SpringLayout.EAST , txtIp,  -5, SpringLayout.EAST , pnlLogin);
+		layout.putConstraint(SpringLayout.WEST , txtIp, 140, SpringLayout.WEST , pnlLogin);
 		
 		//Botão Entrar
-		layout.putConstraint(SpringLayout.EAST , btnOk, -5, SpringLayout.EAST , pnlLogin);
 		layout.putConstraint(SpringLayout.NORTH, btnOk,  5, SpringLayout.SOUTH, txtIp);
+		layout.putConstraint(SpringLayout.EAST , btnOk, -5, SpringLayout.EAST , pnlLogin);
 		
 		pnlLogin.setLayout(layout);
 
