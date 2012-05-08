@@ -3,6 +3,8 @@ package br.com.fiap.chat.client.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,12 +20,15 @@ public class Login extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel pnlLogin;
-	private JButton btnOk;
-	private JTextField txtUsuario, txtIp;
-	private JLabel lblUsuario, lblIp;
-	//private JLabel lblMensagem;
+	private JPanel      pnlLogin;
+	private JButton     btnOk;
+	private JTextField  txtUsuario, txtIp;
+	private JLabel      lblUsuario, lblIp;
+	private KeyListener kevBindEnter;
 	
+	/**
+	 * Seta parâmetros para abertura do formulário
+	 */
 	public void initialize(){
 		initPnlLogin();
 
@@ -34,6 +39,9 @@ public class Login extends JFrame {
 		this.add(pnlLogin);
 	}
 	
+	/**
+	 * Adiciona itens ao Painel
+	 */
 	private void initPnlLogin(){
 		SpringLayout layout = new SpringLayout();
 		
@@ -76,20 +84,49 @@ public class Login extends JFrame {
 		pnlLogin.add(txtIp);
 		pnlLogin.add(btnOk);
 		
+		adicionaListeners();
+	}
+	
+	/**
+	 * Adiciona Listeners aos campos e botões
+	 */
+	private void adicionaListeners(){
 		btnOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				entraChat();
 			}
 		});
+		
+		
+		kevBindEnter = new KeyListener() {	
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == 10)
+					entraChat();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {}
+			
+			@Override
+			public void keyTyped(KeyEvent e) {}
+		};
+		txtIp.addKeyListener(kevBindEnter);
+		txtUsuario.addKeyListener(kevBindEnter);
+		btnOk.addKeyListener(kevBindEnter);
 	}
 	
+	/**
+	 * Fecha o formulário de login e abre a tela de chat
+	 */
 	private void entraChat(){
 		this.dispose();
 		new Chat().initialize();
 	}
 
 	/**
+	 * Inicia o formulário de login
 	 * @param args
 	 */
 	public static void main(String[] args) {
