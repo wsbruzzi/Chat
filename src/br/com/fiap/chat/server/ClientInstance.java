@@ -129,6 +129,7 @@ public class ClientInstance implements Runnable {
 	}
 	
 	private void log(String msg) {
-		System.out.println("LOG: " + msg);
+		// System.out.println("LOG: " + msg);
+		Logger.info(msg);
 	}
 }
