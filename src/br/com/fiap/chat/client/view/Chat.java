@@ -3,6 +3,8 @@ package br.com.fiap.chat.client.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,11 +22,12 @@ public class Chat extends JFrame {
 	 */
 	private static final long serialVersionUID = 2L;
 	
-	private JPanel pnlChat;
-	private JButton btnEnvia;
-	private JTextField txtMensagem;
-	private JTextPane txpHistorico;
-	private String historico = ""; 
+	private JPanel      pnlChat;
+	private JButton     btnEnvia;
+	private JTextField  txtMensagem;
+	private JTextPane   txpHistorico;
+	private String      historico = ""; 
+	private KeyListener kevBindEnter;
 	
 	public void initialize(){
 		initPnlChat();
@@ -72,6 +75,11 @@ public class Chat extends JFrame {
 		pnlChat.add(txtMensagem);
 		pnlChat.add(btnEnvia);
 		
+		adicionaListeners();
+	}
+	
+	private void adicionaListeners(){
+		
 		btnEnvia.addActionListener(new ActionListener() {
 			
 			@Override
@@ -79,10 +87,31 @@ public class Chat extends JFrame {
 				fakeChat();
 			}
 		});
+		
+		kevBindEnter = new KeyListener() {	
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == 10)
+					fakeChat();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {}
+			
+			@Override
+			public void keyTyped(KeyEvent e) {}
+		};
+		txtMensagem.addKeyListener(kevBindEnter);
+		btnEnvia.addKeyListener(kevBindEnter);
+		
 	}
+	
+	
+	
 	private void fakeChat(){
 		historico += txtMensagem.getText() + "\n";
 		
 		txpHistorico.setText(historico);
+		txtMensagem.setText("");
 	}
 }
