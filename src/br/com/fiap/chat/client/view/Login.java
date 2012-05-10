@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import br.com.fiap.chat.suporte.ChatException;
+import br.com.fiap.chat.suporte.Conexao;
+
 public class Login extends JFrame {
 	
 	/**
@@ -121,8 +124,20 @@ public class Login extends JFrame {
 	 * Fecha o formulário de login e abre a tela de chat
 	 */
 	private void entraChat(){
-		this.dispose();
-		new Chat().initialize();
+		String ip   = txtIp.getText(); 
+		String nome = txtUsuario.getText();
+		Conexao conexao = new Conexao(ip, nome);
+		
+		try {
+			conexao.open();
+		} catch (ChatException e) {
+			e.printStackTrace();
+		}
+		
+		if (conexao.isRegistered()) {
+			this.dispose();
+			new Chat().initialize();
+		}
 	}
 
 	/**
