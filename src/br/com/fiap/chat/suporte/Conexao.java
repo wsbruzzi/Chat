@@ -30,7 +30,7 @@ public class Conexao {
 				this.writer = new PrintWriter(this.conexao.getOutputStream(), true);
 				this.reader = new BufferedReader(new InputStreamReader(this.conexao.getInputStream()));
 			}catch (Exception e) {
-				throw new ChatException("Erro ao abrir conex�o: " + e.getMessage());
+				throw new ChatException("Erro ao abrir conexão: " + e.getMessage());
 			}
 			
 			this.inscribeUser();
@@ -48,7 +48,7 @@ public class Conexao {
 		try {
 			this.conexao.close();
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao fechar conex�o: " + e.getMessage());
+			throw new RuntimeException("Erro ao fechar conexão: " + e.getMessage());
 		}
 	}
 		
@@ -86,7 +86,7 @@ public class Conexao {
 		
 		if(!"true".equalsIgnoreCase(this.receive())){
 			this.close();
-			throw new ChatException("Erro ao registrar usu�rio");
+			throw new ChatException("Erro ao registrar usuário");
 		}
 	}
 	
