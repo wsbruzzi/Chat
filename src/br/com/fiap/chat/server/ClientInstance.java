@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 
 import br.com.fiap.chat.definicoes.Acoes;
@@ -21,7 +21,7 @@ public class ClientInstance implements Runnable {
 	private PrintWriter out;
 	private BufferedReader in;
 	private ClientesConectados cc;
-	private Logger logger = Logger.getLogger(ClientInstance.class);
+//	private Logger logger = Logger.getLogger(ClientInstance.class);
 
 	/**
 	 * Inicia o cliente
@@ -134,6 +134,6 @@ public class ClientInstance implements Runnable {
 	
 	private void log(String msg) {
 		// System.out.println("LOG: " + msg);
-		logger.info(msg);
+//		logger.info(msg);
 	}
 }

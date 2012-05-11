@@ -15,6 +15,8 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import br.com.fiap.chat.suporte.Conexao;
+
 public class Chat extends JFrame {
 	
 	/**
@@ -26,10 +28,14 @@ public class Chat extends JFrame {
 	private JButton     btnEnvia;
 	private JTextField  txtMensagem;
 	private JTextPane   txpHistorico;
-	private String      historico = ""; 
+	//private String      historico = ""; 
 	private KeyListener kevBindEnter;
 	
-	public void initialize(){
+	private Conexao     conexao;
+	
+	public void initialize(Conexao conexao){
+		this.conexao = conexao;
+		
 		initPnlChat();
 		
 		this.setTitle("Chat Fiap");
@@ -84,7 +90,7 @@ public class Chat extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fakeChat();
+				enviaMensagem();
 			}
 		});
 		
@@ -92,7 +98,7 @@ public class Chat extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == 10)
-					fakeChat();
+					enviaMensagem();
 			}
 			
 			@Override
@@ -108,10 +114,10 @@ public class Chat extends JFrame {
 	
 	
 	
-	private void fakeChat(){
-		historico += txtMensagem.getText() + "\n";
-		
-		txpHistorico.setText(historico);
+	private void enviaMensagem(){
+		//historico += txtMensagem.getText() + "\n";
+		conexao.sendMessage(txtMensagem.getText());
+		//txpHistorico.setText(historico);
 		txtMensagem.setText("");
 	}
 }

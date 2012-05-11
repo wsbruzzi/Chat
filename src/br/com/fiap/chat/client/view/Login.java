@@ -29,6 +29,7 @@ public class Login extends JFrame {
 	private JLabel      lblUsuario, lblIp;
 	private KeyListener kevBindEnter;
 	
+	
 	/**
 	 * Seta parâmetros para abertura do formulário
 	 */
@@ -136,7 +137,7 @@ public class Login extends JFrame {
 		
 		if (conexao.isRegistered()) {
 			this.dispose();
-			new Chat().initialize();
+			new Chat().initialize(conexao);
 		}
 	}
 
