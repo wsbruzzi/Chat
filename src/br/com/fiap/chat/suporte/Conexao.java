@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
+
+import br.com.fiap.chat.definicoes.Acoes;
 
 
 public class Conexao {
@@ -46,7 +48,7 @@ public class Conexao {
 	
 	public void close(){
 		try {
-			this.sendCommand("sair:");
+			this.sendCommand(Acoes.DESCONECTA, "");
 			this.conexao.close();
 		} catch (IOException e) {
 			throw new RuntimeException("Erro ao fechar conexão: " + e.getMessage());
@@ -71,28 +73,30 @@ public class Conexao {
 			msg.append(" diz: ");
 			msg.append(mensagem);
 			
-			this.sendCommand(msg.toString());
+			this.sendCommand(Acoes.ENVIA_MENSAGEM, msg.toString());
 		}
 	}
 	
-	public List<String> getRegisteredUsers(){
-		this.sendCommand("listaUsuarios:");
-		String usuarios = this.receive();
-		
-		return Arrays.asList(usuarios.split("|"));
+	public void getRegisteredUsers(){
+		this.sendCommand(Acoes.LISTA_USUARIO, "");
 	}
 	
 	private void inscribeUser() throws ChatException{
-		this.sendCommand("registraUsuario:" + this.apelido);
+		this.sendCommand(Acoes.REGISTRA_USUARIO, this.apelido);
 		
-		if(!"true".equalsIgnoreCase(this.receive())){
+		String[] partesRetorno = this.receive().split(":", 2);
+		
+		if (Acoes.valueOf(partesRetorno[0]) != Acoes.REGISTRA_USUARIO || (!"true".equalsIgnoreCase(partesRetorno[1]))) {			
 			this.close();
-			throw new ChatException("Erro ao registrar usuário");
+			throw new ChatException("Erro ao registrar usuario");
 		}
 	}
 	
-	private void sendCommand(String command){
-		this.writer.write(command + "\n");
+	private void sendCommand(Acoes acao, String msg){
+		StringBuilder mensagem = new StringBuilder(acao.toString());
+		mensagem.append(msg);
+		
+		this.writer.write(mensagem + "\n");
 		this.writer.flush();
 	}
 }
