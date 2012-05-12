@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Map;
 
 //import org.apache.log4j.Logger;
 
@@ -31,7 +32,7 @@ public class ClientInstance implements Runnable {
 	public ClientInstance(ServerSocket serverSocket, Socket client, ClientesConectados cc) {
 		this.server = serverSocket;
 		this.client = client;
-		this.cc = cc;
+		this.cc = ClientesConectados.getInstance();
 
 		try {
 			out = new PrintWriter(this.client.getOutputStream(), true);
@@ -45,6 +46,10 @@ public class ClientInstance implements Runnable {
 		serve();
 	}
 
+	public String getApelido() {
+		return this.apelido;
+	}
+	
 	/**
 	 * Envia uma mensagem ao cliente conectado
 	 * @param resposta
@@ -58,14 +63,11 @@ public class ClientInstance implements Runnable {
 	 * Metodo responsavel por receber mensagens do cliente.
 	 */
 	public void serve() {
-
+		
+		String inputLine;
+		
 		try {
-			String inputLine;
 			while ((inputLine = in.readLine()) != null) {
-				if (inputLine.equals("sair:")) {
-					fechaConexao(this.client);
-					throw new SocketException();
-				}
 				enviaParaSala(inputLine);
 				responde(processInput(inputLine));
 			}
@@ -73,16 +75,20 @@ public class ClientInstance implements Runnable {
 			enviaParaSala(apelido + " saiu da sala...");
 		} catch (IOException e) {
 			log("Pau no cliente: " + apelido);
-		}
+		} 
+		/*finally {
+			this.cc.retiraCliente(this.apelido);
+		}*/
 	}
 
 	/**
 	 * Metodo responsavel por fechar a conexao passada como parametro
 	 * @param Socket s
 	 */
-	public void fechaConexao(Socket s) {
+	public void fechaConexao() {
 		try {
-			s.close();
+			this.client.close();
+			this.cc.retiraCliente(this.apelido);
 		} catch (Exception e) {
 			log("Cliente saiu");
 		}
@@ -96,21 +102,55 @@ public class ClientInstance implements Runnable {
 	public String processInput(String theInput) {
 
 		String theOutput = null;
-		String[] comando = theInput.split(":");
+		String[] comando = theInput.split(":", 2);
 		
-		if (Acoes.REGISTRA_USUARIO.getAcao().equals(comando[0])) {
-			theOutput = svRegistraUsuario(comando[1]);
-		} else if(Acoes.ENVIA_MENSAGEM.getAcao().equals(comando[0])) {
-			svEnviaMensagem(comando[1]);
-		} else if(Acoes.DESCONECTA.getAcao().equals(comando[0])) {
-			fechaConexao(this.client);
+		switch(Acoes.valueOf(comando[0])) {
+			case DESCONECTA:
+				fechaConexao();
+			break;
+			
+			case ENVIA_MENSAGEM:
+				svEnviaMensagem(comando[1]);
+			break;
+			
+			case LISTA_USUARIO:
+				svEnviaListaUsuarios();
+			break;
+			
+			case REGISTRA_USUARIO:
+				theOutput = Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]);
+			break;
 		}
-
+		
 		return theOutput;
+	}
+
+	private void svEnviaListaUsuarios() {
+		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
+		String usuarios = Acoes.LISTA_USUARIO.getAcao();
+		
+		if(clientes.size() > 0) {
+			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
+				usuarios += entry.getValue().getApelido() + ";";
+			}
+		}
+		
+		enviaParaSala(usuarios);
+		this.responde(usuarios);
 	}
 
 	private void svEnviaMensagem(String string) {
 		
+		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
+
+		for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
+			
+			if(entry.getKey() != this.apelido) {
+				entry.getValue().responde(string);
+			} else {
+				entry.getValue().responde("[VC] " + string);
+			}
+		}
 	}
 
 	private String svRegistraUsuario(String comando) {
@@ -133,7 +173,7 @@ public class ClientInstance implements Runnable {
 	}
 	
 	private void log(String msg) {
-		// System.out.println("LOG: " + msg);
+		System.out.println("LOG: " + msg);
 //		logger.info(msg);
 	}
 }
