@@ -2,7 +2,7 @@ package br.com.fiap.chat.definicoes;
 
 public enum Acoes {
 	
-	REGISTRA_USUARIO(0, "registraUsuario"), ENVIA_MENSAGEM(1, "enviaMensagem"), DESCONECTA(2, "desconectar");
+	REGISTRA_USUARIO(0, "registraUsuario:"), ENVIA_MENSAGEM(1, "enviaMensagem:"), DESCONECTA(2, "desconectar:"), LISTA_USUARIO(3, "listaUsuarios:");
 	
 	private Integer idAcao;
 	private String nomeAcao;
