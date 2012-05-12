@@ -9,9 +9,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
 
-//import org.apache.log4j.Logger;
-
-
 import br.com.fiap.chat.definicoes.Acoes;
 
 public class ClientInstance implements Runnable {
@@ -68,17 +65,16 @@ public class ClientInstance implements Runnable {
 		
 		try {
 			while ((inputLine = in.readLine()) != null) {
-				enviaParaSala(inputLine);
-				responde(processInput(inputLine));
+				log(inputLine);
+				processInput(inputLine);
 			}
 		} catch (SocketException e) {
-			enviaParaSala(apelido + " saiu da sala...");
+			enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
 		} catch (IOException e) {
 			log("Pau no cliente: " + apelido);
-		} 
-		/*finally {
+		} finally {
 			this.cc.retiraCliente(this.apelido);
-		}*/
+		}
 	}
 
 	/**
@@ -99,9 +95,8 @@ public class ClientInstance implements Runnable {
 	 * @param theInput
 	 * @return
 	 */
-	public String processInput(String theInput) {
+	public void processInput(String theInput) {
 
-		String theOutput = null;
 		String[] comando = theInput.split(":", 2);
 		
 		switch(Acoes.valueOf(comando[0])) {
@@ -118,11 +113,11 @@ public class ClientInstance implements Runnable {
 			break;
 			
 			case REGISTRA_USUARIO:
-				theOutput = Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]);
+				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]));
+				enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
 			break;
 		}
 		
-		return theOutput;
 	}
 
 	private void svEnviaListaUsuarios() {
@@ -134,21 +129,16 @@ public class ClientInstance implements Runnable {
 				usuarios += entry.getValue().getApelido() + ";";
 			}
 		}
-		
-		enviaParaSala(usuarios);
 		this.responde(usuarios);
 	}
 
 	private void svEnviaMensagem(String string) {
-		
+		string = Acoes.ENVIA_MENSAGEM.getAcao() + string;
 		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
-
-		for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
-			
-			if(entry.getKey() != this.apelido) {
+		
+		if(clientes.size() > 0) {
+			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
 				entry.getValue().responde(string);
-			} else {
-				entry.getValue().responde("[VC] " + string);
 			}
 		}
 	}
@@ -163,13 +153,12 @@ public class ClientInstance implements Runnable {
 		this.apelido = comando;
 		this.cc.adicionaCliente(this.apelido, this);
 		
-		enviaParaSala(this.apelido + " entrou na sala...");
 		return "true";
 	}
 	
 	private void enviaParaSala(String msg) {
-		// TODO: depois que implementar o "broadcast"
-		System.out.println("SALA: " + msg);
+		System.out.println("Sala: " + msg);
+		svEnviaMensagem(msg);
 	}
 	
 	private void log(String msg) {
