@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.List;
 
 import br.com.fiap.chat.definicoes.Acoes;
 
@@ -95,8 +93,9 @@ public class Conexao {
 	private void sendCommand(Acoes acao, String msg){
 		StringBuilder mensagem = new StringBuilder(acao.toString());
 		mensagem.append(msg);
+		mensagem.append("\n");
 		
-		this.writer.write(mensagem + "\n");
+		this.writer.write(mensagem.toString());
 		this.writer.flush();
 	}
 }

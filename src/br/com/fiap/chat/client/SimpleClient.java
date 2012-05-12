@@ -13,14 +13,15 @@ public class SimpleClient {
 		try {
 			BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
 			
-			// testando edição pelo github.
-			Conexao conexao = new Conexao("127.0.0.1", "William");
+			// testando edicao pelo github.
+			Conexao conexao = new Conexao("192.168.1.190", "marcio");
 			conexao.open();
 			
 			new Thread(new Receiver(conexao)).start();
 			
 			while(conexao.isRegistered()){
 				conexao.sendMessage(inLine.readLine());
+				conexao.getRegisteredUsers();
 			}
 			
 		} catch (IOException e) {
