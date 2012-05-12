@@ -12,6 +12,10 @@ public enum Acoes {
 		this.nomeAcao = nomeAcao;
 	}
 	
+	public String toString() {
+		return this.nomeAcao;
+	}
+	
 	public String getAcao() {
 		return this.nomeAcao;
 	}
