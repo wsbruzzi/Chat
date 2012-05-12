@@ -9,7 +9,6 @@ public class ClientesConectados {
 
 	private Map<String, ClientInstance> clienteMap = new TreeMap<String, ClientInstance>();
 	private static ClientesConectados cc;
-	private String elize = "String chata";
 	
 	/**
 	 * Singleton

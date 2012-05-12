@@ -69,7 +69,7 @@ public class ClientInstance implements Runnable {
 				processInput(inputLine);
 			}
 		} catch (SocketException e) {
-			enviaParaSala(apelido + " saiu da sala...");
+			enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
 		} catch (IOException e) {
 			log("Pau no cliente: " + apelido);
 		} finally {
@@ -114,6 +114,7 @@ public class ClientInstance implements Runnable {
 			
 			case REGISTRA_USUARIO:
 				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]));
+				enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
 			break;
 		}
 		
@@ -128,16 +129,17 @@ public class ClientInstance implements Runnable {
 				usuarios += entry.getValue().getApelido() + ";";
 			}
 		}
-		
-		enviaParaSala(usuarios);
 		this.responde(usuarios);
 	}
 
 	private void svEnviaMensagem(String string) {
 		string = Acoes.ENVIA_MENSAGEM.getAcao() + string;
 		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
-		for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
-			entry.getValue().responde(string);
+		
+		if(clientes.size() > 0) {
+			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
+				entry.getValue().responde(string);
+			}
 		}
 	}
 
@@ -151,13 +153,12 @@ public class ClientInstance implements Runnable {
 		this.apelido = comando;
 		this.cc.adicionaCliente(this.apelido, this);
 		
-		enviaParaSala(this.apelido + " entrou na sala...");
 		return "true";
 	}
 	
 	private void enviaParaSala(String msg) {
-		// TODO: depois que implementar o "broadcast"
-		System.out.println("SALA: " + msg);
+		System.out.println("Sala: " + msg);
+		svEnviaMensagem(msg);
 	}
 	
 	private void log(String msg) {
