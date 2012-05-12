@@ -6,23 +6,18 @@ import java.io.InputStreamReader;
 
 import br.com.fiap.chat.suporte.ChatException;
 import br.com.fiap.chat.suporte.Conexao;
-
+ 
 public class SimpleClient {
 	public static void main(String[] args) throws InterruptedException {
 		try {
 			BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
 			
-			Conexao conexao = new Conexao("192.168.23.103", "Marcio");
+			// testando edição pelo github.
+			Conexao conexao = new Conexao("127.0.0.1", "William");
 			conexao.open();
-			while(conexao.isLogado()){
-				String mensagem = inLine.readLine();
-				
-				if(":q".equalsIgnoreCase(mensagem)){
-					conexao.close();
-					break;
-				}
-				
-				conexao.sendMessage(mensagem);
+			while(conexao.isRegistered()){
+				conexao.sendMessage(inLine.readLine());
+				//System.out.println(conexao.receive());
 			}
 			
 		} catch (IOException e) {

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Arrays;
 
 
 public class Conexao {
@@ -28,10 +30,10 @@ public class Conexao {
 				this.writer = new PrintWriter(this.conexao.getOutputStream(), true);
 				this.reader = new BufferedReader(new InputStreamReader(this.conexao.getInputStream()));
 			}catch (Exception e) {
-				throw new ChatException("Erro ao abrir conex„o: " + e.getMessage());
+				throw new ChatException("Erro ao abrir conex√£o: " + e.getMessage());
 			}
 			
-			this.registraUsuario();
+			this.inscribeUser();
 		}
 	}
 	
@@ -47,11 +49,11 @@ public class Conexao {
 			this.sendCommand("sair:");
 			this.conexao.close();
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao fechar conex„o: " + e.getMessage());
+			throw new RuntimeException("Erro ao fechar conex√£o: " + e.getMessage());
 		}
 	}
 		
-	public boolean isLogado(){
+	public boolean isRegistered(){
 		return !this.conexao.isClosed();
 	}
 	
@@ -73,12 +75,19 @@ public class Conexao {
 		}
 	}
 	
-	private void registraUsuario() throws ChatException{
+	public List<String> getRegisteredUsers(){
+		this.sendCommand("listaUsuarios:");
+		String usuarios = this.receive();
+		
+		return Arrays.asList(usuarios.split("|"));
+	}
+	
+	private void inscribeUser() throws ChatException{
 		this.sendCommand("registraUsuario:" + this.apelido);
 		
 		if(!"true".equalsIgnoreCase(this.receive())){
 			this.close();
-			throw new ChatException("Erro ao registrar usu·rio");
+			throw new ChatException("Erro ao registrar usu√°rio");
 		}
 	}
 	
