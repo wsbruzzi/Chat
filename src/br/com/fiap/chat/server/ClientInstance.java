@@ -9,9 +9,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
 
-//import org.apache.log4j.Logger;
-
-
 import br.com.fiap.chat.definicoes.Acoes;
 
 public class ClientInstance implements Runnable {
@@ -68,17 +65,16 @@ public class ClientInstance implements Runnable {
 		
 		try {
 			while ((inputLine = in.readLine()) != null) {
-				enviaParaSala(inputLine);
-				responde(processInput(inputLine));
+				log(inputLine);
+				processInput(inputLine);
 			}
 		} catch (SocketException e) {
 			enviaParaSala(apelido + " saiu da sala...");
 		} catch (IOException e) {
 			log("Pau no cliente: " + apelido);
-		} 
-		/*finally {
+		} finally {
 			this.cc.retiraCliente(this.apelido);
-		}*/
+		}
 	}
 
 	/**
@@ -99,9 +95,8 @@ public class ClientInstance implements Runnable {
 	 * @param theInput
 	 * @return
 	 */
-	public String processInput(String theInput) {
+	public void processInput(String theInput) {
 
-		String theOutput = null;
 		String[] comando = theInput.split(":", 2);
 		
 		switch(Acoes.valueOf(comando[0])) {
@@ -118,11 +113,10 @@ public class ClientInstance implements Runnable {
 			break;
 			
 			case REGISTRA_USUARIO:
-				theOutput = Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]);
+				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]));
 			break;
 		}
 		
-		return theOutput;
 	}
 
 	private void svEnviaListaUsuarios() {
@@ -140,16 +134,10 @@ public class ClientInstance implements Runnable {
 	}
 
 	private void svEnviaMensagem(String string) {
-		
+		string = Acoes.ENVIA_MENSAGEM.getAcao() + string;
 		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
-
 		for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
-			
-			if(entry.getKey() != this.apelido) {
-				entry.getValue().responde(string);
-			} else {
-				entry.getValue().responde("[VC] " + string);
-			}
+			entry.getValue().responde(string);
 		}
 	}
 
