@@ -45,10 +45,11 @@ public class Admin extends JFrame{
 		//quadroDeCliente.setSize(200, 600);
 		
 		//histórico
-		layout.putConstraint(SpringLayout.NORTH, quadroDeMensagem,   5, SpringLayout.NORTH, container);
-		layout.putConstraint(SpringLayout.SOUTH, quadroDeMensagem, -35, SpringLayout.SOUTH, container);
-		layout.putConstraint(SpringLayout.EAST , quadroDeMensagem,  -5, SpringLayout.EAST , container);
-		layout.putConstraint(SpringLayout.WEST , quadroDeMensagem,   5, SpringLayout.WEST , container);
+//		layout.putConstraint(SpringLayout.NORTH, quadroDeMensagem,   5, SpringLayout.NORTH, container);
+//		layout.putConstraint(SpringLayout.SOUTH, quadroDeMensagem, -35, SpringLayout.SOUTH, container);
+//		layout.putConstraint(SpringLayout.EAST , quadroDeMensagem,  -5, SpringLayout.EAST , container);
+//		layout.putConstraint(SpringLayout.WEST , quadroDeMensagem,   5, SpringLayout.WEST , container);
+		
 		
 		//Field Mensagem
 //		layout.putConstraint(SpringLayout.NORTH, quadroDeCliente,   5, SpringLayout.NORTH, quadroDeMensagem);
