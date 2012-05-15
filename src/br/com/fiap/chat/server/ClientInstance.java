@@ -10,6 +10,8 @@ import java.net.SocketException;
 import java.util.Map;
 
 import br.com.fiap.chat.definicoes.Acoes;
+import br.com.fiap.chat.definicoes.TipoLog;
+import br.com.fiap.chat.suporte.Logger;
 
 public class ClientInstance implements Runnable {
 
@@ -19,7 +21,6 @@ public class ClientInstance implements Runnable {
 	private PrintWriter out;
 	private BufferedReader in;
 	private ClientesConectados cc;
-//	private Logger logger = Logger.getLogger(ClientInstance.class);
 
 	/**
 	 * Inicia o cliente
@@ -39,7 +40,7 @@ public class ClientInstance implements Runnable {
 
 	@Override
 	public void run() {
-		log("Cliente conectado: " + this.client.getRemoteSocketAddress());
+		Logger.write(TipoLog.SERVER, "Cliente conectado: " + this.client.getRemoteSocketAddress());
 		serve();
 	}
 
@@ -65,13 +66,14 @@ public class ClientInstance implements Runnable {
 		
 		try {
 			while ((inputLine = in.readLine()) != null) {
-				log(inputLine);
+				Logger.write(TipoLog.CLIENT, inputLine);
 				processInput(inputLine);
 			}
 		} catch (SocketException e) {
 			enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
-		} catch (IOException e) {
-			log("Pau no cliente: " + apelido);
+			Logger.write(TipoLog.CLIENT, "SERVER diz: " + apelido + " saiu da sala...");
+		} catch (IOException e) {			
+			Logger.write(TipoLog.SERVER, "Pau no cliente: " + apelido);
 		} finally {
 			this.cc.retiraCliente(this.apelido);
 		}
@@ -86,7 +88,7 @@ public class ClientInstance implements Runnable {
 			this.client.close();
 			this.cc.retiraCliente(this.apelido);
 		} catch (Exception e) {
-			log("Cliente saiu");
+			Logger.write(TipoLog.CLIENT, "Cliente saiu");
 		}
 	}
 
@@ -115,6 +117,7 @@ public class ClientInstance implements Runnable {
 			case REGISTRA_USUARIO:
 				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]));
 				enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
+				Logger.write(TipoLog.CLIENT, "SERVER diz: " + this.apelido + " entrou na sala...");
 			break;
 		}
 		
@@ -146,7 +149,7 @@ public class ClientInstance implements Runnable {
 	private String svRegistraUsuario(String comando) {
 
 		if(this.cc.apelidoExists(comando)) {
-			log("Cliente com o apelido \"" + comando + "\" ja existe");
+			Logger.write(TipoLog.SERVER, "Cliente com o apelido \"" + comando + "\" ja existe");
 			return "false";
 		}
 		
@@ -159,10 +162,5 @@ public class ClientInstance implements Runnable {
 	private void enviaParaSala(String msg) {
 		System.out.println("Sala: " + msg);
 		svEnviaMensagem(msg);
-	}
-	
-	private void log(String msg) {
-		System.out.println("LOG: " + msg);
-//		logger.info(msg);
-	}
+	}	
 }

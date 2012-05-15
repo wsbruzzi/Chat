@@ -15,7 +15,9 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Conexao;
+import br.com.fiap.chat.suporte.Logger;
 
 public class Chat extends JFrame {
 	
@@ -115,9 +117,8 @@ public class Chat extends JFrame {
 	
 	
 	private void enviaMensagem(){
-		//historico += txtMensagem.getText() + "\n";
 		conexao.sendMessage(txtMensagem.getText());
-		//txpHistorico.setText(historico);
+		Logger.write(TipoLog.SERVER, txtMensagem.getText());
 		txtMensagem.setText("");
 	}
 }
