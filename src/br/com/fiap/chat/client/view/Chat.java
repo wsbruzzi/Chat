@@ -29,7 +29,7 @@ public class Chat extends JFrame {
 	private JPanel      pnlChat;
 	private JButton     btnEnvia;
 	private JTextField  txtMensagem;
-	private JTextPane   txpHistorico;
+	private JTextPane   txpHistorico, txpListaUsuarios;
 	//private String      historico = ""; 
 	private KeyListener kevBindEnter;
 	
@@ -39,6 +39,10 @@ public class Chat extends JFrame {
 		this.conexao = conexao;
 		
 		initPnlChat();
+		
+		Receiver r = new Receiver(conexao, txpHistorico, txpListaUsuarios);
+		Thread t = new Thread(r);
+		t.start();
 		
 		this.setTitle("Chat Fiap");
 		this.setSize(300, 500);
@@ -53,18 +57,27 @@ public class Chat extends JFrame {
 		pnlChat = new JPanel();
 		pnlChat.setBackground(Color.WHITE);
 		
+		txpListaUsuarios = new JTextPane();
 		txpHistorico = new JTextPane();
 		txtMensagem  = new JTextField(15);
 		btnEnvia     = new JButton("Enviar");
 		
+		
 		Border txpBorder = BorderFactory.createLineBorder(Color.black);
 		txpHistorico.setBorder(txpBorder);
+		txpListaUsuarios.setBorder(txpBorder);
 		
 		//histórico
 		layout.putConstraint(SpringLayout.NORTH, txpHistorico,   5, SpringLayout.NORTH, pnlChat);
 		layout.putConstraint(SpringLayout.SOUTH, txpHistorico, -35, SpringLayout.SOUTH, pnlChat);
-		layout.putConstraint(SpringLayout.EAST , txpHistorico,  -5, SpringLayout.EAST , pnlChat);
+		layout.putConstraint(SpringLayout.EAST , txpHistorico,  -150, SpringLayout.EAST , pnlChat);
 		layout.putConstraint(SpringLayout.WEST , txpHistorico,   5, SpringLayout.WEST , pnlChat);
+
+		// alunos
+		layout.putConstraint(SpringLayout.NORTH , txpListaUsuarios, 5, SpringLayout.NORTH , pnlChat);
+		layout.putConstraint(SpringLayout.EAST, txpListaUsuarios, -5, SpringLayout.EAST, pnlChat);
+		layout.putConstraint(SpringLayout.SOUTH, txpListaUsuarios, -5, SpringLayout.NORTH, btnEnvia);
+		layout.putConstraint(SpringLayout.WEST, txpListaUsuarios, 5, SpringLayout.EAST, txpHistorico);
 		
 		//Field Mensagem
 		layout.putConstraint(SpringLayout.NORTH, txtMensagem,  5, SpringLayout.SOUTH, txpHistorico);
@@ -82,6 +95,7 @@ public class Chat extends JFrame {
 		pnlChat.add(txpHistorico);
 		pnlChat.add(txtMensagem);
 		pnlChat.add(btnEnvia);
+		pnlChat.add(txpListaUsuarios);
 		
 		adicionaListeners();
 	}

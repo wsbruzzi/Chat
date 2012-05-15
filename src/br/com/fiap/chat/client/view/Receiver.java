@@ -62,7 +62,7 @@ public class Receiver implements Runnable{
 	@Override
 	public void run() {
 		while(this.conexao.isRegistered())
-			this.read(false);
+			this.read(true);
 		
 	}
 

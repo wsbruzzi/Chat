@@ -9,9 +9,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
 
-import br.com.fiap.chat.definicoes.Acoes;
 import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Logger;
+import br.com.fiap.chat.definicoes.Acoes;
 
 public class ClientInstance implements Runnable {
 
@@ -70,12 +70,14 @@ public class ClientInstance implements Runnable {
 				processInput(inputLine);
 			}
 		} catch (SocketException e) {
-			enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
-			Logger.write(TipoLog.CLIENT, "SERVER diz: " + apelido + " saiu da sala...");
-		} catch (IOException e) {			
+			if(apelido != null) {
+				enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
+				Logger.write(TipoLog.CLIENT, "SERVER diz: " + apelido + " saiu da sala...");
+			}
+		} catch (IOException e) {
 			Logger.write(TipoLog.SERVER, "Pau no cliente: " + apelido);
 		} finally {
-			this.cc.retiraCliente(this.apelido);
+			fechaConexao();
 		}
 	}
 
@@ -87,8 +89,9 @@ public class ClientInstance implements Runnable {
 		try {
 			this.client.close();
 			this.cc.retiraCliente(this.apelido);
+			svEnviaListaUsuarios();
 		} catch (Exception e) {
-			Logger.write(TipoLog.CLIENT, "Cliente saiu");
+			log("Cliente saiu");
 		}
 	}
 
@@ -115,9 +118,12 @@ public class ClientInstance implements Runnable {
 			break;
 			
 			case REGISTRA_USUARIO:
-				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + svRegistraUsuario(comando[1]));
-				enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
-				Logger.write(TipoLog.CLIENT, "SERVER diz: " + this.apelido + " entrou na sala...");
+				String maluca = svRegistraUsuario(comando[1]);
+				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + maluca);
+				svEnviaListaUsuarios();
+				if(maluca.equals("true")) {
+					enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
+				}
 			break;
 		}
 		
@@ -131,8 +137,10 @@ public class ClientInstance implements Runnable {
 			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
 				usuarios += entry.getValue().getApelido() + ";";
 			}
+			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
+				entry.getValue().responde(usuarios);
+			}
 		}
-		this.responde(usuarios);
 	}
 
 	private void svEnviaMensagem(String string) {
@@ -149,7 +157,7 @@ public class ClientInstance implements Runnable {
 	private String svRegistraUsuario(String comando) {
 
 		if(this.cc.apelidoExists(comando)) {
-			Logger.write(TipoLog.SERVER, "Cliente com o apelido \"" + comando + "\" ja existe");
+			log("Cliente com o apelido \"" + comando + "\" ja existe");
 			return "false";
 		}
 		
@@ -162,5 +170,10 @@ public class ClientInstance implements Runnable {
 	private void enviaParaSala(String msg) {
 		System.out.println("Sala: " + msg);
 		svEnviaMensagem(msg);
-	}	
+	}
+	
+	private void log(String msg) {
+		System.out.println("LOG: " + msg);
+//		logger.info(msg);
+	}
 }

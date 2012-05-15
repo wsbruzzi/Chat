@@ -26,7 +26,7 @@ public class Login extends JFrame {
 	private JPanel      pnlLogin;
 	private JButton     btnOk;
 	private JTextField  txtUsuario, txtIp;
-	private JLabel      lblUsuario, lblIp;
+	private JLabel      lblUsuario, lblIp, lblMensagem;
 	private KeyListener kevBindEnter;
 	
 	
@@ -38,9 +38,9 @@ public class Login extends JFrame {
 
 		this.setTitle("Login Chat Fiap");
 		this.setSize(400,120);
+		this.add(pnlLogin);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.add(pnlLogin);
 	}
 	
 	/**
@@ -54,6 +54,7 @@ public class Login extends JFrame {
 
 		lblUsuario = new JLabel("Apelido");
 		lblIp      = new JLabel("IP do servidor"); 
+		lblMensagem = new JLabel();
 		txtUsuario = new JTextField(15);
 		txtIp      = new JTextField(15);
 		btnOk      = new JButton("Entrar");
@@ -71,6 +72,13 @@ public class Login extends JFrame {
 		layout.putConstraint(SpringLayout.NORTH, lblIp, 5, SpringLayout.SOUTH, lblUsuario);
 		layout.putConstraint(SpringLayout.WEST , lblIp, 5, SpringLayout.WEST , pnlLogin);
 		
+		
+		// label mensagem
+		layout.putConstraint(SpringLayout.NORTH, lblMensagem, 5, SpringLayout.SOUTH , txtIp);
+		layout.putConstraint(SpringLayout.EAST, lblMensagem, -5, SpringLayout.WEST , btnOk);
+		layout.putConstraint(SpringLayout.WEST, lblMensagem, 5, SpringLayout.WEST , pnlLogin);
+		layout.putConstraint(SpringLayout.SOUTH, lblMensagem, -5, SpringLayout.SOUTH , pnlLogin);
+		
 		//Field Ip
 		layout.putConstraint(SpringLayout.NORTH, txtIp,   5, SpringLayout.SOUTH, txtUsuario);
 		layout.putConstraint(SpringLayout.EAST , txtIp,  -5, SpringLayout.EAST , pnlLogin);
@@ -83,6 +91,7 @@ public class Login extends JFrame {
 		pnlLogin.setLayout(layout);
 
 		pnlLogin.add(lblUsuario);
+		pnlLogin.add(lblMensagem);
 		pnlLogin.add(txtUsuario);
 		pnlLogin.add(lblIp);
 		pnlLogin.add(txtIp);
@@ -132,7 +141,7 @@ public class Login extends JFrame {
 		try {
 			conexao.open();
 		} catch (ChatException e) {
-			e.printStackTrace();
+			lblMensagem.setText("Nao foi possivel conectar");
 		}
 		
 		if (conexao.isRegistered()) {
