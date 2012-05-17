@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.text.StyledEditorKit.AlignmentAction;
 
 import br.com.fiap.chat.suporte.ChatException;
 import br.com.fiap.chat.suporte.Conexao;
@@ -31,7 +33,7 @@ public class Login extends JFrame {
 	
 	
 	/**
-	 * Seta parÃ¢metros para abertura do formulÃ¡rio
+	 * Seta parâmetros para abertura do formulário
 	 */
 	public void initialize(){
 		initPnlLogin();
@@ -52,18 +54,20 @@ public class Login extends JFrame {
 		pnlLogin = new JPanel();
 		pnlLogin.setBackground(Color.WHITE);
 
-		lblUsuario = new JLabel("Apelido");
-		lblIp      = new JLabel("IP do servidor"); 
+		lblUsuario  = new JLabel("Apelido");
+		lblIp       = new JLabel("IP do servidor"); 
 		lblMensagem = new JLabel();
-		txtUsuario = new JTextField(15);
-		txtIp      = new JTextField(15);
-		btnOk      = new JButton("Entrar");
+		txtUsuario  = new JTextField(15);
+		txtIp       = new JTextField(15);
+		btnOk       = new JButton("Entrar");
+		
+		lblMensagem.setForeground(Color.RED);
 
-		//Label UsuÃ¡rio
+		//Label Usuário
 		layout.putConstraint(SpringLayout.NORTH, lblUsuario, 5, SpringLayout.NORTH, pnlLogin);
 		layout.putConstraint(SpringLayout.WEST , lblUsuario, 5, SpringLayout.WEST , pnlLogin);
 		
-		//Field UsuÃ¡rio 
+		//Field Usuário 
 		layout.putConstraint(SpringLayout.NORTH, txtUsuario,   5, SpringLayout.NORTH, pnlLogin);
 		layout.putConstraint(SpringLayout.EAST , txtUsuario,  -5, SpringLayout.EAST , pnlLogin);
 		layout.putConstraint(SpringLayout.WEST , txtUsuario, 140, SpringLayout.WEST , pnlLogin);
@@ -74,9 +78,9 @@ public class Login extends JFrame {
 		
 		
 		// label mensagem
-		layout.putConstraint(SpringLayout.NORTH, lblMensagem, 5, SpringLayout.SOUTH , txtIp);
-		layout.putConstraint(SpringLayout.EAST, lblMensagem, -5, SpringLayout.WEST , btnOk);
-		layout.putConstraint(SpringLayout.WEST, lblMensagem, 5, SpringLayout.WEST , pnlLogin);
+		layout.putConstraint(SpringLayout.NORTH, lblMensagem,  5, SpringLayout.SOUTH , txtIp);
+		layout.putConstraint(SpringLayout.EAST,  lblMensagem, -5, SpringLayout.WEST  , btnOk);
+		layout.putConstraint(SpringLayout.WEST,  lblMensagem,  5, SpringLayout.WEST  , pnlLogin);
 		layout.putConstraint(SpringLayout.SOUTH, lblMensagem, -5, SpringLayout.SOUTH , pnlLogin);
 		
 		//Field Ip
@@ -84,7 +88,7 @@ public class Login extends JFrame {
 		layout.putConstraint(SpringLayout.EAST , txtIp,  -5, SpringLayout.EAST , pnlLogin);
 		layout.putConstraint(SpringLayout.WEST , txtIp, 140, SpringLayout.WEST , pnlLogin);
 		
-		//BotÃ£o Entrar
+		//Botão Entrar
 		layout.putConstraint(SpringLayout.NORTH, btnOk,  5, SpringLayout.SOUTH, txtIp);
 		layout.putConstraint(SpringLayout.EAST , btnOk, -5, SpringLayout.EAST , pnlLogin);
 		
@@ -131,7 +135,7 @@ public class Login extends JFrame {
 	}
 	
 	/**
-	 * Fecha o formulÃ¡rio de login e abre a tela de chat
+	 * Fecha o formulário de login e abre a tela de chat
 	 */
 	private void entraChat(){
 		String ip   = txtIp.getText(); 
@@ -151,11 +155,10 @@ public class Login extends JFrame {
 	}
 
 	/**
-	 * Inicia o formulÃ¡rio de login
+	 * Inicia o formulário de login
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		new Login().initialize();
 	}
 
