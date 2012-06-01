@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.text.StyledEditorKit.AlignmentAction;
 
 import br.com.fiap.chat.suporte.ChatException;
 import br.com.fiap.chat.suporte.Conexao;

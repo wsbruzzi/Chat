@@ -1,5 +1,6 @@
 package br.com.fiap.chat.client.view;
 
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 import br.com.fiap.chat.definicoes.Acoes;
@@ -7,14 +8,14 @@ import br.com.fiap.chat.suporte.Conexao;
 
 public class Receiver implements Runnable{
 	private final Conexao conexao;
-	private final JTextPane txtMensagens;
-	private final JTextPane txtListaUsuarios;
+	private final JTextArea txtMensagens;
+	private final JTextArea txtListaUsuarios;
 
 
-	public Receiver(Conexao conexao, JTextPane txtMensagens, JTextPane txtListaUsuarios) {
+	public Receiver(Conexao conexao, JTextArea txpHistorico, JTextArea txpListaUsuarios) {
 		this.conexao = conexao;
-		this.txtMensagens = txtMensagens;
-		this.txtListaUsuarios = txtListaUsuarios;
+		this.txtMensagens = txpHistorico;
+		this.txtListaUsuarios = txpListaUsuarios;
 	}
 	
 	public Receiver(Conexao conexao) {

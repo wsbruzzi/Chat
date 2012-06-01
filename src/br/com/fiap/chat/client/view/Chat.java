@@ -10,8 +10,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
@@ -29,9 +29,10 @@ public class Chat extends JFrame {
 	private JPanel      pnlChat;
 	private JButton     btnEnvia;
 	private JTextField  txtMensagem;
-	private JTextPane   txpHistorico, txpListaUsuarios;
-	//private String      historico = ""; 
+	private JTextArea   txpHistorico, txpListaUsuarios;
 	private KeyListener kevBindEnter;
+//	private JScrollPane scrollHistorico;
+//	private JScrollBar  scrollBar;
 	
 	private Conexao     conexao;
 	
@@ -57,8 +58,10 @@ public class Chat extends JFrame {
 		pnlChat = new JPanel();
 		pnlChat.setBackground(Color.WHITE);
 		
-		txpListaUsuarios = new JTextPane();
-		txpHistorico = new JTextPane();
+		txpListaUsuarios = new JTextArea();
+		txpHistorico = new JTextArea();
+		txpHistorico.setLineWrap(true);
+		txpHistorico.setFocusable(true);
 		txtMensagem  = new JTextField(15);
 		btnEnvia     = new JButton("Enviar");
 		
@@ -67,17 +70,22 @@ public class Chat extends JFrame {
 		txpHistorico.setBorder(txpBorder);
 		txpListaUsuarios.setBorder(txpBorder);
 		
-		//histÃ³rico
+//		scrollHistorico = new JScrollPane(txpHistorico);
+//		scrollBar       = new JScrollBar();
+//		scrollHistorico.add(scrollBar);
+		
+		//histórico
 		layout.putConstraint(SpringLayout.NORTH, txpHistorico,   5, SpringLayout.NORTH, pnlChat);
 		layout.putConstraint(SpringLayout.SOUTH, txpHistorico, -35, SpringLayout.SOUTH, pnlChat);
-		layout.putConstraint(SpringLayout.EAST , txpHistorico,  -150, SpringLayout.EAST , pnlChat);
+		layout.putConstraint(SpringLayout.EAST , txpHistorico,-160, SpringLayout.EAST , pnlChat);
 		layout.putConstraint(SpringLayout.WEST , txpHistorico,   5, SpringLayout.WEST , pnlChat);
 
 		// alunos
-		layout.putConstraint(SpringLayout.NORTH , txpListaUsuarios, 5, SpringLayout.NORTH , pnlChat);
-		layout.putConstraint(SpringLayout.EAST, txpListaUsuarios, -5, SpringLayout.EAST, pnlChat);
-		layout.putConstraint(SpringLayout.SOUTH, txpListaUsuarios, -5, SpringLayout.NORTH, btnEnvia);
-		layout.putConstraint(SpringLayout.WEST, txpListaUsuarios, 5, SpringLayout.EAST, txpHistorico);
+		layout.putConstraint(SpringLayout.NORTH, txpListaUsuarios, 5, SpringLayout.NORTH, pnlChat);
+		layout.putConstraint(SpringLayout.EAST , txpListaUsuarios,-5, SpringLayout.EAST , pnlChat);
+		layout.putConstraint(SpringLayout.SOUTH, txpListaUsuarios,-5, SpringLayout.NORTH, btnEnvia);
+		layout.putConstraint(SpringLayout.WEST , txpListaUsuarios, 5, SpringLayout.EAST , txpHistorico);
+//		layout.putConstraint(SpringLayout.WEST , txpListaUsuarios, 5, SpringLayout.EAST , scrollHistorico);
 		
 		//Field Mensagem
 		layout.putConstraint(SpringLayout.NORTH, txtMensagem,  5, SpringLayout.SOUTH, txpHistorico);
@@ -89,9 +97,17 @@ public class Chat extends JFrame {
 		layout.putConstraint(SpringLayout.SOUTH, btnEnvia, -5, SpringLayout.SOUTH, pnlChat);
 		layout.putConstraint(SpringLayout.EAST , btnEnvia, -5, SpringLayout.EAST , pnlChat);
 		
+		//Barra de rolagem
+//		layout.putConstraint(SpringLayout.NORTH, scrollHistorico, 0, SpringLayout.NORTH, txpHistorico);
+//		layout.putConstraint(SpringLayout.SOUTH, scrollHistorico, 0, SpringLayout.SOUTH, txpHistorico);
+//		layout.putConstraint(SpringLayout.EAST , scrollHistorico, 10, SpringLayout.EAST , txpHistorico);
+//		layout.putConstraint(SpringLayout.WEST , scrollHistorico, 0, SpringLayout.EAST, txpHistorico);
 
+//		pnlChat.add(scrollHistorico, BorderLayout.EAST);
+		
 		pnlChat.setLayout(layout);
 		
+//		pnlChat.add(scrollHistorico);
 		pnlChat.add(txpHistorico);
 		pnlChat.add(txtMensagem);
 		pnlChat.add(btnEnvia);
