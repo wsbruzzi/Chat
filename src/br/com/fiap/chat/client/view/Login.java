@@ -31,12 +31,12 @@ public class Login extends JFrame {
 	
 	
 	/**
-	 * Seta parâmetros para abertura do formulário
+	 * Seta parï¿½metros para abertura do formulï¿½rio
 	 */
 	public void initialize(){
 		initPnlLogin();
 
-		this.setTitle("Login Chat Fiap");
+		this.setTitle("Login Chat");
 		this.setSize(400,120);
 		this.add(pnlLogin);
 		this.setVisible(true);
@@ -52,8 +52,8 @@ public class Login extends JFrame {
 		pnlLogin = new JPanel();
 		pnlLogin.setBackground(Color.WHITE);
 
-		lblUsuario  = new JLabel("Apelido");
-		lblIp       = new JLabel("IP do servidor"); 
+		lblUsuario  = new JLabel("Usuario");
+		lblIp       = new JLabel("IP del servidor"); 
 		lblMensagem = new JLabel();
 		txtUsuario  = new JTextField(15);
 		txtIp       = new JTextField(15);
@@ -61,11 +61,11 @@ public class Login extends JFrame {
 		
 		lblMensagem.setForeground(Color.RED);
 
-		//Label Usuário
+		//Label Usuï¿½rio
 		layout.putConstraint(SpringLayout.NORTH, lblUsuario, 5, SpringLayout.NORTH, pnlLogin);
 		layout.putConstraint(SpringLayout.WEST , lblUsuario, 5, SpringLayout.WEST , pnlLogin);
 		
-		//Field Usuário 
+		//Field Usuï¿½rio 
 		layout.putConstraint(SpringLayout.NORTH, txtUsuario,   5, SpringLayout.NORTH, pnlLogin);
 		layout.putConstraint(SpringLayout.EAST , txtUsuario,  -5, SpringLayout.EAST , pnlLogin);
 		layout.putConstraint(SpringLayout.WEST , txtUsuario, 140, SpringLayout.WEST , pnlLogin);
@@ -86,7 +86,7 @@ public class Login extends JFrame {
 		layout.putConstraint(SpringLayout.EAST , txtIp,  -5, SpringLayout.EAST , pnlLogin);
 		layout.putConstraint(SpringLayout.WEST , txtIp, 140, SpringLayout.WEST , pnlLogin);
 		
-		//Botão Entrar
+		//Botï¿½o Entrar
 		layout.putConstraint(SpringLayout.NORTH, btnOk,  5, SpringLayout.SOUTH, txtIp);
 		layout.putConstraint(SpringLayout.EAST , btnOk, -5, SpringLayout.EAST , pnlLogin);
 		
@@ -133,7 +133,7 @@ public class Login extends JFrame {
 	}
 	
 	/**
-	 * Fecha o formulário de login e abre a tela de chat
+	 * Fecha o formulï¿½rio de login e abre a tela de chat
 	 */
 	private void entraChat(){
 		String ip   = txtIp.getText(); 
@@ -143,7 +143,7 @@ public class Login extends JFrame {
 		try {
 			conexao.open();
 		} catch (ChatException e) {
-			lblMensagem.setText("Nao foi possivel conectar");
+			lblMensagem.setText("No se pudo conectar");
 		}
 		
 		if (conexao.isRegistered()) {
@@ -153,7 +153,7 @@ public class Login extends JFrame {
 	}
 
 	/**
-	 * Inicia o formulário de login
+	 * Inicia o formulï¿½rio de login
 	 * @param args
 	 */
 	public static void main(String[] args) {

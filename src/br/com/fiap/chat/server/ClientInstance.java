@@ -71,8 +71,8 @@ public class ClientInstance implements Runnable {
 			}
 		} catch (SocketException e) {
 			if(apelido != null) {
-				enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
-				Logger.write(TipoLog.CLIENT, "SERVER diz: " + apelido + " saiu da sala...");
+				enviaParaSala("SERVER dice: " + apelido + " salio de la sala...");
+				Logger.write(TipoLog.CLIENT, "SERVER dice: " + apelido + " salio de la sala...");
 			}
 		} catch (IOException e) {
 			Logger.write(TipoLog.SERVER, "Pau no cliente: " + apelido);
@@ -91,7 +91,7 @@ public class ClientInstance implements Runnable {
 			this.cc.retiraCliente(this.apelido);
 			svEnviaListaUsuarios();
 		} catch (Exception e) {
-			log("Cliente saiu");
+			log("Cliente salio");
 		}
 	}
 
@@ -122,7 +122,7 @@ public class ClientInstance implements Runnable {
 				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + maluca);
 				svEnviaListaUsuarios();
 				if(maluca.equals("true")) {
-					enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
+					enviaParaSala("SERVER dice: " + this.apelido + " entro a la sala...");
 				}
 			break;
 		}
@@ -157,7 +157,7 @@ public class ClientInstance implements Runnable {
 	private String svRegistraUsuario(String comando) {
 
 		if(this.cc.apelidoExists(comando)) {
-			log("Cliente com o apelido \"" + comando + "\" ja existe");
+			log("Cliente con el usuario \"" + comando + "\" ya existe");
 			return "false";
 		}
 		

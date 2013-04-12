@@ -30,7 +30,7 @@ public class Conexao {
 				this.writer = new PrintWriter(this.conexao.getOutputStream(), true);
 				this.reader = new BufferedReader(new InputStreamReader(this.conexao.getInputStream()));
 			}catch (Exception e) {
-				throw new ChatException("Erro ao abrir conexão: " + e.getMessage());
+				throw new ChatException("Error al abrir la conexion: " + e.getMessage());
 			}
 			
 			this.inscribeUser();
@@ -49,7 +49,7 @@ public class Conexao {
 			this.sendCommand(Acoes.DESCONECTA, "");
 			this.conexao.close();
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao fechar conexão: " + e.getMessage());
+			throw new RuntimeException("Error al cerrar la conexion: " + e.getMessage());
 		}
 	}
 		
@@ -61,14 +61,14 @@ public class Conexao {
 		try {
 			return this.reader.readLine();
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao receber mensagem: " + e.getMessage());
+			throw new RuntimeException("Error al recibir mensaje: " + e.getMessage());
 		}
 	}
 	
 	public void sendMessage(String mensagem){
 		if(!"".equals(mensagem.trim())){
 			StringBuilder msg = new StringBuilder(this.apelido);
-			msg.append(" diz: ");
+			msg.append(" dice: ");
 			msg.append(mensagem);
 			
 			this.sendCommand(Acoes.ENVIA_MENSAGEM, msg.toString());
@@ -86,7 +86,7 @@ public class Conexao {
 		
 		if (Acoes.valueOf(partesRetorno[0]) != Acoes.REGISTRA_USUARIO || (!"true".equalsIgnoreCase(partesRetorno[1]))) {			
 			this.close();
-			throw new ChatException("Erro ao registrar usuario");
+			throw new ChatException("Error al registrar al usuario");
 		}
 	}
 	

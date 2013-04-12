@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -45,7 +46,7 @@ public class Chat extends JFrame {
 		Thread t = new Thread(r);
 		t.start();
 		
-		this.setTitle("Chat Fiap");
+		this.setTitle("Chat Room");
 		this.setSize(300, 500);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -74,7 +75,7 @@ public class Chat extends JFrame {
 //		scrollBar       = new JScrollBar();
 //		scrollHistorico.add(scrollBar);
 		
-		//histórico
+		//histï¿½rico
 		layout.putConstraint(SpringLayout.NORTH, txpHistorico,   5, SpringLayout.NORTH, pnlChat);
 		layout.putConstraint(SpringLayout.SOUTH, txpHistorico, -35, SpringLayout.SOUTH, pnlChat);
 		layout.putConstraint(SpringLayout.EAST , txpHistorico,-160, SpringLayout.EAST , pnlChat);
@@ -151,4 +152,13 @@ public class Chat extends JFrame {
 		Logger.write(TipoLog.SERVER, txtMensagem.getText());
 		txtMensagem.setText("");
 	}
+
+	@Override
+	public synchronized void removeWindowListener(WindowListener l) {
+		// TODO Auto-generated method stub
+		conexao.close();
+		super.removeWindowListener(l);
+	}
+	
+	
 }

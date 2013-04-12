@@ -7,7 +7,7 @@ public class TesteLogger {
 
 	public static void main(String[] args) {
 		
-		Logger.write(TipoLog.CLIENT, "teste log client...");
-		Logger.write(TipoLog.SERVER, "teste log server...");
+		Logger.write(TipoLog.CLIENT, "prueba del log del cliente...");
+		Logger.write(TipoLog.SERVER, "prueba del log del servidor...");
 	}
 }

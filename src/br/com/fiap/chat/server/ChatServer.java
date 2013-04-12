@@ -18,7 +18,7 @@ public class ChatServer {
 		try {
 			serverSocket = new ServerSocket(porta);
 		} catch (IOException e) {
-			Logger.write(TipoLog.SERVER, "Nao foi possivel ouvir a porta: " + porta);
+			Logger.write(TipoLog.SERVER, "No se pudo escuchar el puerto: " + porta);
 			System.exit(1);
 		}
 
@@ -29,7 +29,7 @@ public class ChatServer {
 				ClientInstance ci = new ClientInstance(serverSocket, clientSocket, cc);
 				new Thread(ci).start();
 			} catch (IOException e) {
-				Logger.write(TipoLog.SERVER, "Falha ao aceitar o cliente");
+				Logger.write(TipoLog.SERVER, "No se pudo acceptar el cliente");
 				System.exit(1);
 			}
 		}
