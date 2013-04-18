@@ -117,6 +117,10 @@ public class ClientInstance implements Runnable {
 				svEnviaListaUsuarios();
 			break;
 			
+			case LLAVE_PUBLICA:
+				svEnviaLlave(comando[1]);
+			break;
+			
 			case REGISTRA_USUARIO:
 				String maluca = svRegistraUsuario(comando[1]);
 				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + maluca);
@@ -145,6 +149,17 @@ public class ClientInstance implements Runnable {
 
 	private void svEnviaMensagem(String string) {
 		string = Acoes.ENVIA_MENSAGEM.getAcao() + string;
+		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
+		
+		if(clientes.size() > 0) {
+			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
+				entry.getValue().responde(string);
+			}
+		}
+	}
+	
+	private void svEnviaLlave(String string) {
+		string = Acoes.LLAVE_PUBLICA.getAcao() + string;
 		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
 		
 		if(clientes.size() > 0) {

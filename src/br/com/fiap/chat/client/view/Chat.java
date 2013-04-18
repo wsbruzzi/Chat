@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowListener;
+import java.math.BigInteger;
+import java.util.BitSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import com.ajt.rsa.RSA;
+
+import br.com.fiap.chat.definicoes.Acoes;
 import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Conexao;
 import br.com.fiap.chat.suporte.Logger;
@@ -32,6 +37,8 @@ public class Chat extends JFrame {
 	private JTextField  txtMensagem;
 	private JTextArea   txpHistorico, txpListaUsuarios;
 	private KeyListener kevBindEnter;
+	
+	
 //	private JScrollPane scrollHistorico;
 //	private JScrollBar  scrollBar;
 	
@@ -145,10 +152,21 @@ public class Chat extends JFrame {
 		
 	}
 	
+	private void enviaLLaves(){
+		
+		//BigInteger ciphertext = rsa.encrypt(new BigInteger(mensaje.getBytes()));
+		 
+		//conexao.sendMessage(ciphertext.toString());
+	}
 	
 	
 	private void enviaMensagem(){
-		conexao.sendMessage(txtMensagem.getText());
+		String mensaje = txtMensagem.getText();
+		
+		//BigInteger ciphertext = rsa.encrypt(new BigInteger(mensaje.getBytes()));
+		 
+		//conexao.sendMessage(ciphertext.toString());
+		conexao.sendMessage(mensaje);
 		Logger.write(TipoLog.SERVER, txtMensagem.getText());
 		txtMensagem.setText("");
 	}
