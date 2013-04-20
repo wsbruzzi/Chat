@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowListener;
 import java.math.BigInteger;
 import java.util.BitSet;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,9 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
-
 import com.ajt.rsa.RSA;
-
 import br.com.fiap.chat.definicoes.Acoes;
 import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Conexao;
@@ -28,7 +25,9 @@ import br.com.fiap.chat.suporte.Logger;
 public class Chat extends JFrame {
 	
 	/**
-	 * 
+	 * Esta clase se encarga de la parte grafica del cliente. 
+	 * Muestra los mensajes en pantalla la lista de usuarios y los log del servidor
+	 * Utilisando como libreria principa la de java Swing.para la interfas grafica.
 	 */
 	private static final long serialVersionUID = 2L;
 	

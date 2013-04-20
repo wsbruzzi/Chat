@@ -19,7 +19,10 @@ import br.com.fiap.chat.suporte.Conexao;
 public class Login extends JFrame {
 	
 	/**
-	 * 
+	 * Esta clase se encarga de mostrar el JFrame para el login de un nuevo cliente
+	 * Puede usar la red 127.0.0.1 si corre el servidor localmente. 
+	 * recibe nombre de usuario e ip del servidor
+	 * si el nombre de usuario se repite no podra ingresar al chat room
 	 */
 	private static final long serialVersionUID = 1L;
 	

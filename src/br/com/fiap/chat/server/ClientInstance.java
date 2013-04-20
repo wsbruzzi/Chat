@@ -8,11 +8,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
-
 import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Logger;
 import br.com.fiap.chat.definicoes.Acoes;
-
+/**
+ * 
+ * Es una instancia del cliente con todos sus datos necesarios para registrarse 
+ * y puerto para poder comunicarse 
+ * 
+ *
+ */
 public class ClientInstance implements Runnable {
 
 	private String ip, apelido = null;

@@ -12,7 +12,13 @@ import com.ajt.rsa.RSA;
 import br.com.fiap.chat.definicoes.Acoes;
 import br.com.fiap.chat.server.ClientInstance;
 import br.com.fiap.chat.suporte.Conexao;
-
+/**
+ * 
+ * Clase para recibir los mensajes desde el servidor 
+ * Es un hilo que corre paralelo para poder recibir los mensajes y monstrarlos en pantalla
+ * se reciben asincronicamente
+ * 
+ */
 public class Receiver implements Runnable{
 	private final Conexao conexao;
 	private final JTextArea txtMensagens;

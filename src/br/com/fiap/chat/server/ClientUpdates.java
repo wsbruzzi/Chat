@@ -1,5 +1,8 @@
 package br.com.fiap.chat.server;
-
+/*
+ * Instancia de un hilo para poder manejar los updates 
+ * dinamicamente
+ */
 public class ClientUpdates implements Runnable {
 
 	@Override

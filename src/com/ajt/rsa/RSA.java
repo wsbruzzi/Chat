@@ -1,5 +1,9 @@
 package com.ajt.rsa;
-
+/*
+ * Clase principal para desarrollar el algorimo RSA
+ * Con esta clase se crean claves se encrypta y 
+ * se desencripta los datos con el algoritmo de RSA a 1024bits
+ */
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
@@ -75,7 +79,6 @@ public class RSA {
 		return e;
 	}
 
-//	/** Trivial test program. */
 //	public static void main(String[] args) {
 //		RSA rsa = new RSA(1024);
 //

@@ -8,11 +8,15 @@ import java.math.BigInteger;
 import java.net.Socket;
 import java.util.Map;
 import java.util.TreeMap;
-
 import com.ajt.rsa.RSA;
 
 import br.com.fiap.chat.definicoes.Acoes;
 
+/**
+ * Esta es la clase conexao es la clase principal para el chat y el cifrado
+ * maneja el envio de mensaje, de comandos, la supscripcion de un cliente con el servidor.
+ * agrega encriptacion a los mensajes enviados.
+ */
 public class Conexao {
 	private String ipServidor;
 	public String apelido;
@@ -99,6 +103,7 @@ public class Conexao {
 		}
 	}
 	public void sendMessage(String mensagem) {
+		this.sendCommand(Acoes.LLAVE_PUBLICA, this.apelido+";"+rsa.getN().toString()+";"+rsa.getE().toString());
 		if (!"".equals(mensagem.trim())) {
 			String msg = new String(this.apelido);
 			//String cifrado="";

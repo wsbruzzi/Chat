@@ -2,7 +2,9 @@ package br.com.fiap.chat.suporte;
 
 import br.com.fiap.chat.definicoes.TipoLog;
 
-// apagar classe
+/*
+ * simplemente prueba el debug del servidor
+ */
 public class TesteLogger {
 
 	public static void main(String[] args) {

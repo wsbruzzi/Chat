@@ -6,7 +6,13 @@ import java.net.Socket;
 
 import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Logger;
-
+/**
+ * 
+ * Este es el servidor principal 
+ * Se encarga de administrar los clientes y se mantiene 
+ * en un loop infinito esperando consultas
+ *
+ */
 public class ChatServer {
 	public static void main(String[] args) throws IOException {
 
