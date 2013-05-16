@@ -10,8 +10,8 @@ import br.com.fiap.chat.definicoes.TipoLog;
 public class Logger {
 
 	/**
-	 * TipoLog -> server ou client
-	 * Mensagem -> string que será gravada mais data/hora
+	 * TipoLog -> servidor o cliente
+	 * Mensagem -> string sera gravado en mis datos ahora
 	 * 
 	 * @param destino
 	 * @param mensagem

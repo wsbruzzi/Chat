@@ -4,7 +4,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.SingleSelectionModel;
-
+/**
+ * 
+ * Clase para definir los clientes conectados
+ * Posee un diccionario que mapea los clientes a una instancia
+ *
+ */
 public class ClientesConectados {
 
 	private Map<String, ClientInstance> clienteMap = new TreeMap<String, ClientInstance>();

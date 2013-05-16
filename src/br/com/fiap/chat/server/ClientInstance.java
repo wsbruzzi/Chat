@@ -8,11 +8,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
-
 import br.com.fiap.chat.definicoes.TipoLog;
 import br.com.fiap.chat.suporte.Logger;
 import br.com.fiap.chat.definicoes.Acoes;
-
+/**
+ * 
+ * Es una instancia del cliente con todos sus datos necesarios para registrarse 
+ * y puerto para poder comunicarse 
+ * 
+ *
+ */
 public class ClientInstance implements Runnable {
 
 	private String ip, apelido = null;
@@ -71,8 +76,8 @@ public class ClientInstance implements Runnable {
 			}
 		} catch (SocketException e) {
 			if(apelido != null) {
-				enviaParaSala("SERVER diz: " + apelido + " saiu da sala...");
-				Logger.write(TipoLog.CLIENT, "SERVER diz: " + apelido + " saiu da sala...");
+				enviaParaSala("SERVER dice: " + apelido + " salio de la sala...");
+				Logger.write(TipoLog.CLIENT, "SERVER dice: " + apelido + " salio de la sala...");
 			}
 		} catch (IOException e) {
 			Logger.write(TipoLog.SERVER, "Pau no cliente: " + apelido);
@@ -91,7 +96,7 @@ public class ClientInstance implements Runnable {
 			this.cc.retiraCliente(this.apelido);
 			svEnviaListaUsuarios();
 		} catch (Exception e) {
-			log("Cliente saiu");
+			log("Cliente salio");
 		}
 	}
 
@@ -117,12 +122,16 @@ public class ClientInstance implements Runnable {
 				svEnviaListaUsuarios();
 			break;
 			
+			case LLAVE_PUBLICA:
+				svEnviaLlave(comando[1]);
+			break;
+			
 			case REGISTRA_USUARIO:
 				String maluca = svRegistraUsuario(comando[1]);
 				this.responde(Acoes.REGISTRA_USUARIO.getAcao() + maluca);
 				svEnviaListaUsuarios();
 				if(maluca.equals("true")) {
-					enviaParaSala("SERVER diz: " + this.apelido + " entrou na sala...");
+					enviaParaSala("SERVER dice: " + this.apelido + " entro a la sala...");
 				}
 			break;
 		}
@@ -153,11 +162,22 @@ public class ClientInstance implements Runnable {
 			}
 		}
 	}
+	
+	private void svEnviaLlave(String string) {
+		string = Acoes.LLAVE_PUBLICA.getAcao() + string;
+		Map<String, ClientInstance> clientes = this.cc.getClientesConectados();
+		
+		if(clientes.size() > 0) {
+			for (Map.Entry<String, ClientInstance> entry : clientes.entrySet()) {
+				entry.getValue().responde(string);
+			}
+		}
+	}
 
 	private String svRegistraUsuario(String comando) {
 
 		if(this.cc.apelidoExists(comando)) {
-			log("Cliente com o apelido \"" + comando + "\" ja existe");
+			log("Cliente con el usuario \"" + comando + "\" ya existe");
 			return "false";
 		}
 		
